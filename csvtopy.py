@@ -28,14 +28,14 @@ def write_words(row_index,path,data,col_0,col_1):
     print(line)
 
 
-    if line[0] == 'LOOP_Begin':#csv 中提取loop begin/end 循环，line[0]为当前行第一个单元格数据
+    if line[0] == 'L_Start':#csv 中提取loop begin/end 循环，line[0]为当前行第一个单元格数据
         col_0_l = col_0.tolist()#csv文件第一列转化为列表，方便读取数据
         print(col_0_l)
         row_index,write_word=parse_loop(row_index, col_0, col_1, col_0_l,line)
 
-    elif line[0] == 'IF_Begin': #csv 中包含ifelse循环进行提取
+    elif line[0] == 'IF_Start': #csv 中包含ifelse循环进行提取
         row_index,write_word=parse_ifelse(row_index,col_0, data)
-    elif line[0] == 'IR_SendKey' and line_1[0] in ['DELAY_ms', 'DELAY_Sec']:
+    elif line[0] == 'IK_SendKey' and line_1[0] in ['DELAY_ms', 'DELAY_Sec']:
         row_index,write_word=parse_general(row_index, line_1, line)#csv 中包含一次性key值发送
 
     else:
@@ -54,8 +54,8 @@ def file_name(path):
 
 
 if __name__=='__main__':
-    csv_path=r'D:\software\python\selenium_python\case\script\script_csv'
-    py_path=r'D:\software\python\selenium_python\case\script\script_py'
+    csv_path=r'D:\csvtopy\sample'
+    py_path=r'D:\csvtopy\script_py'
     csv_paths=[os.path.join(csv_path,file) for file in os.listdir(csv_path)]
     print(csv_paths)
     for csv_path in csv_paths:
